@@ -1,5 +1,6 @@
 package com.example.teammanagement.repository;
 
+import com.example.teammanagement.exception.InvalidUserException;
 import com.example.teammanagement.model.User;
 
 import java.util.ArrayList;
@@ -33,5 +34,23 @@ public class UserRepository {
 
     public static List<User> getAllUsers() {
         return usersList;
+    }
+
+    public static void createUser(User newUser) throws InvalidUserException {
+        if(newUser == null || newUser.getId() == null ||"".equals(newUser.getId())) {
+             throw new InvalidUserException("User ID cannot be blank or null");
+        }
+        usersList.add(newUser);
+    }
+
+    public static void deleteUser(User user) throws InvalidUserException {
+        if(user == null || user.getId() == null ||"".equals(user.getId())) {
+            throw new InvalidUserException("User ID cannot be blank or null");
+        }
+
+        int index = usersList.indexOf(user);
+        if(index != -1) {
+            usersList.remove(index);
+        }
     }
 }
